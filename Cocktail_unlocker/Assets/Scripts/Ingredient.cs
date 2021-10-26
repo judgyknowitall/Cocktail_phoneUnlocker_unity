@@ -2,21 +2,18 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-
-// Resources:
-// https://www.youtube.com/watch?v=sf9_ingF57s
-
-public class GameLogic : MonoBehaviour
+public class Ingredient : MonoBehaviour
 {
-
-    Ingredient selectedIngredient;
-    List<Ingredient> pswd = new List<Ingredient>();
+    public int id = 0;
+    public Color color;
+    public bool isLiquid = true;
+    public float viscosity = 0.1f;
 
 
     // Start is called before the first frame update
     void Start()
     {
-        
+        color = GetComponentInChildren<SpriteRenderer>().color;
     }
 
     // Update is called once per frame
