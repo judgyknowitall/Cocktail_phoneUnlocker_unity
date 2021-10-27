@@ -1,22 +1,32 @@
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class Cup_logic : MonoBehaviour
 {
-    private SpriteRenderer spriteRenderer;
+    List<SpriteRenderer> fluids = new List<SpriteRenderer>();
+    static Color invisible = new Color(1.0f, 1.0f, 1.0f, 0.0f);
+    int layer = 0;
+
+
 
     // Start is called before the first frame update
     void Start()
     {
-        spriteRenderer = GetComponent<SpriteRenderer>();
+        layer = 0; // Make sure this is reset
+
+        foreach (Transform t in transform)
+        {
+            if (t.gameObject.name.Contains("Layer"))
+            {
+                SpriteRenderer s = t.gameObject.GetComponent<SpriteRenderer>();
+                s.color = invisible;
+                fluids.Add(s);
+            }
+        }
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
-    private void OnTriggerEnter2D(Collider2D collision)
+    void OnTriggerEnter2D(Collider2D collision)
     {
 
         Debug.Log("Touched!");
@@ -25,10 +35,19 @@ public class Cup_logic : MonoBehaviour
             Ingredient ingredient = collision.gameObject.GetComponent<Ingredient>();
 
             // Change colour logic
-            spriteRenderer.color = ingredient.color;
+            ChangeColor(ingredient.color);
 
             // Ask Manager to check password
             FindObjectOfType<GameManager>().AddToCombo(ingredient.id);
+        }
+    }
+
+    void ChangeColor(Color color)
+    {
+        if (layer < fluids.Count)
+        {
+            fluids[layer].color = color;
+            layer++;
         }
     }
 }
