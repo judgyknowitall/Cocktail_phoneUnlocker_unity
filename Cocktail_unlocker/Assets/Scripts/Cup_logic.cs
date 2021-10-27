@@ -28,7 +28,7 @@ public class Cup_logic : MonoBehaviour
             spriteRenderer.color = ingredient.color;
 
             // Ask Manager to check password
-            FindObjectOfType<GameManager>().CheckPassword(ingredient.id);
+            FindObjectOfType<GameManager>().AddToCombo(ingredient.id);
         }
     }
 }

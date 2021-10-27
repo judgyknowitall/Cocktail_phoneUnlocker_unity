@@ -9,12 +9,32 @@ public class GameManager : MonoBehaviour
     private List<int> pswd = new List<int>() { 6, 5, 1 };
 
 
-    public void CheckPassword (int id)
+    void shakePhone()
+    {
+        // WORK HERE
+
+
+
+
+
+
+        CheckPassword();
+    }
+
+
+
+    // Add ingredient id to current combination
+    public void AddToCombo(int id)
+    {
+        currentCombo.Add(id);
+    }
+
+
+    // Check Password
+    public void CheckPassword ()
     {
         if (locked)
         {
-            currentCombo.Add(id);
-
             if (currentCombo.Count == pswd.Count)
             {
                 for (int i = 0; i < currentCombo.Count; i++)
@@ -34,4 +54,6 @@ public class GameManager : MonoBehaviour
         Debug.Log("PHONE UNLOCKED!");
 
     }
+
+
 }
