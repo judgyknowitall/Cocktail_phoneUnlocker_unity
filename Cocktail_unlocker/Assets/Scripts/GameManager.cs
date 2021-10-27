@@ -5,7 +5,6 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
-    bool locked;
     List<int> currentCombo = new List<int>();
     private List<int> pswd = new List<int>() { 6, 5, 1 };
 
@@ -14,7 +13,6 @@ public class GameManager : MonoBehaviour
     void Start()
     {
         currentCombo.Clear();
-        locked = true;
     }
 
 
@@ -27,7 +25,11 @@ public class GameManager : MonoBehaviour
 
 
 
-        CheckPassword();
+
+
+
+        if (CheckPassword())UnlockPhone();
+        else RestartScene();
     }
 
 
@@ -40,21 +42,20 @@ public class GameManager : MonoBehaviour
 
 
     // Check Password
-    public void CheckPassword ()
+    bool CheckPassword ()
     {
-        if (locked)
+        if (currentCombo.Count == pswd.Count)
         {
-            if (currentCombo.Count == pswd.Count)
+            for (int i = 0; i < currentCombo.Count; i++)
             {
-                for (int i = 0; i < currentCombo.Count; i++)
+                if (currentCombo[i] != pswd[i])
                 {
-                    if (currentCombo[i] != pswd[i]) return;
+                    return false;
                 }
-
-                // Password was correct!
-                locked = false;
-                UnlockPhone();
             }
+
+            // Password was correct!
+            return true;
         }
     }
 
@@ -62,5 +63,11 @@ public class GameManager : MonoBehaviour
     {
         Debug.Log("PHONE UNLOCKED!");
         SceneManager.LoadScene("Unlocked_scene");
+    }
+
+    void RestartScene()
+    {
+        Debug.Log("PASSWORD INCORRECT!");
+        SceneManager.LoadScene("Cocktail_scene");
     }
 }

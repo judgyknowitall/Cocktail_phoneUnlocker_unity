@@ -28,8 +28,6 @@ public class Cup_logic : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D collision)
     {
-
-        Debug.Log("Touched!");
         if (collision.tag == "Ingredient")
         {
             Ingredient ingredient = collision.gameObject.GetComponent<Ingredient>();
