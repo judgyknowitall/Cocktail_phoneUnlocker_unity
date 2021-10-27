@@ -1,12 +1,8 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Cup_logic : MonoBehaviour
 {
     private SpriteRenderer spriteRenderer;
-    List<int> currentCombo = new List<int>();
-    private List<int> pswd = new List<int>() { 1, 2 } ;
 
     // Start is called before the first frame update
     void Start()
@@ -26,20 +22,13 @@ public class Cup_logic : MonoBehaviour
         Debug.Log("Touched!");
         if (collision.tag == "Ingredient")
         {
-            spriteRenderer.color = collision.gameObject.GetComponent<Ingredient>().color;
+            Ingredient ingredient = collision.gameObject.GetComponent<Ingredient>();
 
-            // Check password
-            if (currentCombo.Count == pswd.Count)
-            {
-                for (int i = 0; i < currentCombo.Count; i++) {
-                    if (currentCombo[i] != pswd[i]) return;
-                }
+            // Change colour logic
+            spriteRenderer.color = ingredient.color;
 
-                // Password was correct!
-
-            }
-
-            
+            // Ask Manager to check password
+            FindObjectOfType<GameManager>().CheckPassword(ingredient.id);
         }
     }
 }

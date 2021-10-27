@@ -1,6 +1,6 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using System.Collections;
 
 public class DragAndDrop : MonoBehaviour
 {
@@ -28,11 +28,15 @@ public class DragAndDrop : MonoBehaviour
             switch (touch.phase)
             {
                 case TouchPhase.Began:
-
+                    // Allow Move Ingredient!
                     Collider2D touchedCollider = Physics2D.OverlapPoint(touchPosition);
                     if (col == touchedCollider)
                     {
                         moveAllowed = true;
+
+                        // Change Text
+                        int id = GetComponent<Ingredient>().id;
+                        FindObjectOfType<Text>().GetComponent<Label>().UpdateText(id);
                     }
                     break;
 
@@ -46,6 +50,7 @@ public class DragAndDrop : MonoBehaviour
                 case TouchPhase.Ended:
                     moveAllowed = false;
                     transform.position = originalPos;
+                    FindObjectOfType<Text>().GetComponent<Label>().RemoveText();
                     break;
             }
         }

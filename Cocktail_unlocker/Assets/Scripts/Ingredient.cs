@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class Ingredient : MonoBehaviour
 {
-    public int id = 0;
+    public int id;
     public Color color;
-    public bool isLiquid = true;
+    public bool isLiquid;
     public float viscosity = 0.1f;
 
 
