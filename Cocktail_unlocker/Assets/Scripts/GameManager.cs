@@ -8,31 +8,31 @@ public class GameManager : MonoBehaviour
     List<int> currentCombo = new List<int>();
     private List<int> pswd = new List<int>() { 6, 5, 1 };
 
+    public float ShakeDetectionThreshold;
+    public float MinShakeInterval;
+
+    private float sqrShakeDetectionThreshold;
+    private float timeSinceLastShake;
+
 
     // Start is called before the first frame update
     void Start()
     {
         currentCombo.Clear();
+        sqrShakeDetectionThreshold = Mathf.Pow(ShakeDetectionThreshold, 2);
     }
 
-
-    void shakePhone()
+    void Update() 
     {
-        // WORK HERE
-
-
-
-
-
-
-
-
-
-        if (CheckPassword())UnlockPhone();
-        else RestartScene();
+        // Detection for shaking, i.e. passes threshold
+        if (Input.acceleration.sqrMagnitude >= sqrShakeDetectionThreshold
+        && Time.unscaledTime >= timeSinceLastShake + MinShakeInterval)
+        {
+            timeSinceLastShake = Time.unscaledTime;
+            if (CheckPassword())UnlockPhone();
+            else RestartScene();
+        }
     }
-
-
 
     // Add ingredient id to current combination
     public void AddToCombo(int id)
@@ -57,6 +57,7 @@ public class GameManager : MonoBehaviour
             // Password was correct!
             return true;
         }
+        else return false;
     }
 
     void UnlockPhone()
